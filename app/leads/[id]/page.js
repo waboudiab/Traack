@@ -3,6 +3,7 @@ import { leadQueryId } from "@/lib/ingest";
 import { currentShop } from "@/lib/session";
 import { formatWhen } from "@/lib/time";
 import DetailClient from "./detail-client";
+import LiveRefresh from "../../live-refresh";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +35,8 @@ export default async function LeadPage({ params }) {
   const title = (lead.subject || lead.snippet || "Lead").slice(0, 80);
 
   return (
+    <>
+    <LiveRefresh />
     <DetailClient
       lead={{
         id: lead._id.toString(),
@@ -58,5 +61,6 @@ export default async function LeadPage({ params }) {
         })),
       }}
     />
+    </>
   );
 }

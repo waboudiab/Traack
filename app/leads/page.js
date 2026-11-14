@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { currentShop } from "@/lib/session";
 import { relativeWhen } from "@/lib/time";
 import LeadsList from "./leads-list";
+import LiveRefresh from "../live-refresh";
 
 export const dynamic = "force-dynamic";
 
@@ -29,6 +30,8 @@ export default async function LeadsPage({ searchParams }) {
     .toArray();
 
   return (
+    <>
+    <LiveRefresh />
     <LeadsList
       notice={notice}
       leads={leads.map((lead) => ({
@@ -46,5 +49,6 @@ export default async function LeadsPage({ searchParams }) {
         threadTrashed: Boolean(lead.threadTrashedAt),
       }))}
     />
+    </>
   );
 }
