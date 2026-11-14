@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "test:env": "node tests/env.test.js",
-    "test:env:prod": "node tests/env.test.js --target https://itraack.vercel.app"
+    "test:env:prod": "node tests/env.test.js --target https://traack-shop.vercel.app"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
