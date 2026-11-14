@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
-import NotifyButton from "../notify-button";
 
 const filters = [
   ["hot", "Hot"],
@@ -19,7 +18,7 @@ function badgeFor(lead) {
   return ["new", "New"];
 }
 
-export default function LeadsList({ leads, notice, notifyKey }) {
+export default function LeadsList({ leads, notice }) {
   const [filter, setFilter] = useState("hot");
   const [sort, setSort] = useState("newest");
 
@@ -58,7 +57,6 @@ export default function LeadsList({ leads, notice, notifyKey }) {
           </button>
         ))}
       </div>
-      <NotifyButton publicKey={notifyKey || ""} />
       {notice ? <div className="toast" role="status">{notice}</div> : null}
       <label className="field">
         Sort

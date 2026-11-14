@@ -4,8 +4,9 @@ import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BUILTIN_LEAD_WORDS } from "@/lib/rules";
+import NotifyButton from "../notify-button";
 
-export default function SettingsForm({ settings }) {
+export default function SettingsForm({ settings, notifyKey }) {
   const router = useRouter();
   const [form, setForm] = useState(settings);
   const [error, setError] = useState("");
@@ -63,6 +64,7 @@ export default function SettingsForm({ settings }) {
           <span>Notify by email</span>
           <input type="checkbox" checked={form.notifyEmail} onChange={(event) => set("notifyEmail", event.target.checked)} />
         </div>
+        <NotifyButton publicKey={notifyKey || ""} />
 
         <h3>Google Maps link</h3>
         <label className="field">

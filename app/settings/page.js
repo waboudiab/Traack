@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { defaultSettings } from "@/lib/presets";
 import { currentShop } from "@/lib/session";
+import { vapidPublicKey } from "@/lib/push";
 import SettingsForm from "./settings-form";
 
 export const dynamic = "force-dynamic";
@@ -23,5 +24,5 @@ export default async function SettingsPage() {
   settings.ownerMobile = ctx.shop.phone?.ownerMobile || settings.ownerMobile || "";
   settings.leadKeywords = Array.isArray(settings.leadKeywords) ? settings.leadKeywords.join("\n") : "";
   settings.skipKeywords = Array.isArray(settings.skipKeywords) ? settings.skipKeywords.join("\n") : "";
-  return <SettingsForm settings={settings} />;
+  return <SettingsForm settings={settings} notifyKey={vapidPublicKey()} />;
 }

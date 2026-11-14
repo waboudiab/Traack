@@ -3,7 +3,6 @@ import { currentShop } from "@/lib/session";
 import { relativeWhen } from "@/lib/time";
 import LeadsList from "./leads-list";
 import LiveRefresh from "../live-refresh";
-import { vapidPublicKey } from "@/lib/push";
 
 export const dynamic = "force-dynamic";
 
@@ -34,7 +33,6 @@ export default async function LeadsPage({ searchParams }) {
     <>
     <LiveRefresh />
     <LeadsList
-      notifyKey={vapidPublicKey()}
       notice={notice}
       leads={leads.map((lead) => ({
         id: lead._id.toString(),
