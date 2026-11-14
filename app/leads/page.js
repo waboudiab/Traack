@@ -43,6 +43,8 @@ export default async function LeadsPage({ searchParams }) {
         name: lead.customerName || "Unknown",
         unreadCount: lead.unreadCount || 0,
         snippet: lead.snippet || "",
+        replySent: Boolean(lead.ackedAt),
+        reminderSent: Boolean(lead.nudgeFor && lead.lastCustomerAt && new Date(lead.nudgeFor) >= new Date(lead.lastCustomerAt)),
         reviewSent: Boolean(lead.reviewSentAt),
         lastCustomerAt: lead.lastCustomerAt ? new Date(lead.lastCustomerAt).toISOString() : "",
         ago: relativeWhen(lead.lastCustomerAt || lead.createdAt),

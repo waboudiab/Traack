@@ -1,4 +1,4 @@
-const CACHE = "traack-v3";
+const CACHE = "traack-v4";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -45,12 +45,19 @@ self.addEventListener("push", (event) => {
   } catch {
     data.body = event.data ? event.data.text() : data.body;
   }
+  const actions = Array.isArray(data.actions)
+    ? data.actions
+        .filter((item) => item && item.action && item.title)
+        .slice(0, 3)
+        .map((item) => ({ action: String(item.action), title: String(item.title) }))
+    : [];
   event.waitUntil(
     self.registration.showNotification(data.title || "Traack", {
       body: data.body || "",
       icon: "/icons/icon-192.png",
       badge: "/icons/icon-192.png",
-      data: { url: data.url || "/leads" },
+      data: { url: data.url || "/leads", leadId: data.leadId || "" },
+      actions,
     })
   );
 });
@@ -70,28 +77,43 @@ async function openApp(path) {
   return self.clients.openWindow(home.href);
 }
 
+async function focusOrOpen(path) {
+  const target = new URL(path, self.location.origin).href;
+  const list = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+  const ours = list.filter((client) => client.url.startsWith(self.location.origin));
+  for (const client of ours) {
+    try {
+      const focused = await client.focus();
+      if (!focused || (focused.visibilityState !== "visible" && !focused.focused)) continue;
+      if (typeof focused.navigate === "function") {
+        await focused.navigate(target);
+        return focused;
+      }
+      focused.postMessage({ type: "traack-open", url: path });
+      return focused;
+    } catch {
+      // This window could not be brought forward. Try the next one, then open the app.
+    }
+  }
+  return openApp(path);
+}
+
 self.addEventListener("notificationclick", (event) => {
   const path = openPath(event.notification.data?.url);
-  const target = new URL(path, self.location.origin).href;
+  const leadId = String(event.notification.data?.leadId || "");
+  const action = ["pending", "done", "declined", "new"].includes(event.action) ? event.action : "";
   event.notification.close();
   event.waitUntil(
-    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (list) => {
-      const ours = list.filter((client) => client.url.startsWith(self.location.origin));
-      for (const client of ours) {
-        try {
-          const focused = await client.focus();
-          if (!focused || (focused.visibilityState !== "visible" && !focused.focused)) continue;
-          if (typeof focused.navigate === "function") {
-            await focused.navigate(target);
-            return focused;
-          }
-          focused.postMessage({ type: "traack-open", url: path });
-          return focused;
-        } catch {
-          // This window could not be brought forward. Try the next one, then open the app.
-        }
+    (async () => {
+      if (action && leadId) {
+        await fetch(new URL(`/api/leads/${leadId}`, self.location.origin), {
+          method: "PATCH",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status: action }),
+        }).catch(() => {});
       }
-      return openApp(path);
-    })
+      return focusOrOpen(path);
+    })()
   );
 });

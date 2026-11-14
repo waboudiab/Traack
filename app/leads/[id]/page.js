@@ -51,6 +51,12 @@ export default async function LeadPage({ params }) {
         canTrash: ctx.shop.emailConnect?.type === "gmail" && messages.some((message) => message.threadId || String(message.openUrl || "").includes("#inbox/")) && !lead.threadTrashedAt,
         threadTrashed: Boolean(lead.threadTrashedAt),
         threadTrashedWhen: lead.threadTrashedAt ? formatWhen(lead.threadTrashedAt) : "",
+        replySent: Boolean(lead.ackedAt),
+        replyWhen: formatWhen(lead.ackedAt),
+        reminderSent: Boolean(lead.nudgeFor && lead.lastCustomerAt && new Date(lead.nudgeFor) >= new Date(lead.lastCustomerAt)),
+        reminderWhen: formatWhen(lead.nudgeSentAt),
+        reviewSent: Boolean(lead.reviewSentAt),
+        reviewWhen: formatWhen(lead.reviewSentAt),
         messages: messages.map((message) => ({
           id: message._id.toString(),
           direction: message.direction,

@@ -91,6 +91,13 @@ export default function LeadsList({ leads, notice }) {
             <div className="snip">
               {lead.unreadCount > 0 ? <><strong>New:</strong> “{lead.snippet}”</> : activity}
             </div>
+            {lead.replySent || lead.reminderSent || lead.reviewSent ? (
+              <div className="checks">
+                {lead.replySent ? <span className="check">✓ Reply</span> : null}
+                {lead.reminderSent ? <span className="check">✓ Reminder</span> : null}
+                {lead.reviewSent ? <span className="check">✓ Review</span> : null}
+              </div>
+            ) : null}
             {lead.threadTrashed ? <div className="snip">Email thread in Gmail Trash</div> : null}
           </Link>
         );

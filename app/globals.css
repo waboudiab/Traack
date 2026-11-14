@@ -285,6 +285,16 @@ a.secondary {
 }
 
 .snip { font-size: 13px; color: var(--muted); line-height: 1.35; }
+
+.checks { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+.check { font-size: 12px; font-weight: 500; color: var(--ok); }
+
+.sent-list {
+  margin: 10px 0 0;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.5;
+}
 .snip strong { color: var(--ink); font-weight: 500; }
 
 .back {

@@ -49,6 +49,7 @@ export default function SettingsForm({ settings, notifyKey }) {
         <label className="field">
           Remind owner after
           <select value={String(form.nudgeHours)} onChange={(event) => set("nudgeHours", Number(event.target.value))}>
+            <option value="5">5 minutes</option>
             <option value="10">10 minutes</option>
             <option value="30">30 minutes</option>
             <option value="60">1 hour</option>
@@ -58,7 +59,7 @@ export default function SettingsForm({ settings, notifyKey }) {
             <option value="4320">3 days</option>
           </select>
         </label>
-        <p className="hint">Fires when the shop still has not replied to the customer after a new lead.</p>
+        <p className="hint">Fires when the shop still has not replied. The automatic first reply does not count. The email and the phone alert include Pending, Done, and Declined. Checks run about every 15 minutes.</p>
         <div className="switch-row">
           <span>Notify by text</span>
           <input type="checkbox" checked={form.notifySms} onChange={(event) => set("notifySms", event.target.checked)} />

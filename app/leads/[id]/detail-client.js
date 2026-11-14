@@ -131,6 +131,11 @@ export default function DetailClient({ lead }) {
         {threadTrashed ? (
           <p className="trashed-note">Email thread in Gmail Trash{trashedWhen ? ` · ${trashedWhen}` : ""}. The messages below stay in Traack.</p>
         ) : null}
+        <ul className="sent-list">
+          <li>{lead.replySent ? `Initial reply sent${lead.replyWhen ? ` · ${lead.replyWhen}` : ""}` : "Initial reply not sent yet"}</li>
+          <li>{lead.reminderSent ? `Owner reminder sent${lead.reminderWhen ? ` · ${lead.reminderWhen}` : ""}` : "Owner reminder not sent yet"}</li>
+          <li>{lead.reviewSent ? `Google review request sent${lead.reviewWhen ? ` · ${lead.reviewWhen}` : ""}` : "Google review request not sent yet"}</li>
+        </ul>
         {lead.messages.map((message) => (
           <div key={message.id} id={message.latest ? "latest-msg" : undefined} className={message.latest ? "msg latest" : message.direction === "out" ? "msg out" : "msg"}>
             <div className="when">{message.when} · {message.latest ? "latest from customer" : message.label}</div>
