@@ -397,6 +397,13 @@ a.secondary {
   line-height: 1.4;
 }
 
+.or {
+  margin: 14px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+
 .links {
   display: flex;
   justify-content: space-between;

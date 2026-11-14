@@ -1,22 +1,57 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function LoginForm() {
+const googleErrors = {
+  need_shop: "Enter the shop name, then continue with Google.",
+  no_shop: "No shop uses that Google account. Create one and enter the shop name.",
+  google: "Google sign-in did not finish. Try again.",
+};
+
+export default function LoginForm({ googleEnabled, ticket, errorCode }) {
   const router = useRouter();
-  const [creating, setCreating] = useState(false);
+  const [creating, setCreating] = useState(errorCode === "need_shop" || errorCode === "no_shop");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [pending, setPending] = useState(false);
+  const [error, setError] = useState(googleErrors[errorCode] || "");
+  const [pending, setPending] = useState(Boolean(ticket));
 
   async function finish() {
     const me = await fetch("/api/me").then((res) => res.json()).catch(() => null);
     router.push(me?.emailConnected ? "/leads" : "/connect");
     router.refresh();
+  }
+
+  useEffect(() => {
+    if (!ticket) return;
+    let cancel = false;
+    signIn("credentials", { ticket, redirect: false }).then(async (result) => {
+      if (cancel) return;
+      if (!result?.ok) {
+        setPending(false);
+        setError("Google sign-in did not finish. Try again.");
+        return;
+      }
+      await finish();
+    });
+    return () => {
+      cancel = true;
+    };
+  }, [ticket]);
+
+  function continueGoogle() {
+    setError("");
+    const shopName = name.trim();
+    if (creating && shopName.length < 2) {
+      setError("Enter the shop name.");
+      return;
+    }
+    const url = new URL("/api/auth/google", window.location.origin);
+    if (creating) url.searchParams.set("name", shopName);
+    window.location.assign(url.toString());
   }
 
   async function onSubmit(event) {
@@ -53,13 +88,22 @@ export default function LoginForm() {
       <h2>{creating ? "Create account" : "Log in"}</h2>
       <p className="lead">Shop owner account. Channels connect next.</p>
       {error ? <p className="error">{error}</p> : null}
+      {creating ? (
+        <label className="field">
+          Shop name
+          <input value={name} onChange={(event) => setName(event.target.value)} autoComplete="organization" />
+        </label>
+      ) : null}
+      {googleEnabled ? (
+        <>
+          <button className="secondary" type="button" disabled={pending} onClick={continueGoogle}>
+            Continue with Google
+          </button>
+          <p className="hint">Signs you into Traack. The shop inbox connects on the next screen.</p>
+          <p className="or">or</p>
+        </>
+      ) : null}
       <form onSubmit={onSubmit}>
-        {creating ? (
-          <label className="field">
-            Shop name
-            <input value={name} onChange={(event) => setName(event.target.value)} autoComplete="organization" />
-          </label>
-        ) : null}
         <label className="field">
           Email
           <input type="email" value={email} onChange={(event) => setEmail(event.target.value)} autoComplete="email" />
