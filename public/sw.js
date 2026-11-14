@@ -1,4 +1,4 @@
-const CACHE = "traack-v1";
+const CACHE = "traack-v2";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -35,5 +35,37 @@ self.addEventListener("fetch", (event) => {
         return response;
       })
       .catch(() => caches.match(request).then((cached) => cached || caches.match("/")))
+  );
+});
+
+self.addEventListener("push", (event) => {
+  let data = { title: "Traack", body: "Something new arrived.", url: "/leads" };
+  try {
+    data = { ...data, ...(event.data ? event.data.json() : {}) };
+  } catch {
+    data.body = event.data ? event.data.text() : data.body;
+  }
+  event.waitUntil(
+    self.registration.showNotification(data.title || "Traack", {
+      body: data.body || "",
+      icon: "/icons/icon-192.png",
+      badge: "/icons/icon-192.png",
+      data: { url: data.url || "/leads" },
+    })
+  );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const target = new URL(event.notification.data?.url || "/leads", self.location.origin).href;
+  event.waitUntil(
+    self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (list) => {
+      for (const client of list) {
+        if (!client.url.startsWith(self.location.origin)) continue;
+        if ("navigate" in client) await client.navigate(target);
+        return client.focus();
+      }
+      return self.clients.openWindow(target);
+    })
   );
 });
