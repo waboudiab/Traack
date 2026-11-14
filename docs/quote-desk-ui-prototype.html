@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Quote Desk — UI prototype</title>
+  <style>
+    :root {
+      --bg: #efebe4;
+      --surface: #ffffff;
+      --ink: #1c1917;
+      --muted: #57534e;
+      --line: #e7e5e4;
+      --accent: #0f766e;
+      --accent-ink: #ffffff;
+      --hot: #b45309;
+      --ok: #047857;
+      --font: "Segoe UI", "Helvetica Neue", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--ink);
+      background: #d6d3d1;
+      padding: 24px 16px 48px;
+    }
+    h1.doc {
+      max-width: 920px;
+      margin: 0 auto 8px;
+      font-size: 22px;
+      font-weight: 500;
+    }
+    p.doc {
+      max-width: 920px;
+      margin: 0 auto 20px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .layout {
+      max-width: 920px;
+      margin: 0 auto;
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 800px) {
+      .layout { grid-template-columns: 200px 390px 1fr; align-items: start; }
+    }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; }
+    @media (min-width: 800px) { .nav { flex-direction: column; } }
+    .nav button {
+      border: 1px solid #a8a29e;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+    }
+    .nav button[aria-pressed="true"] {
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+    .phone {
+      background: var(--bg);
+      border: 1px solid #a8a29e;
+      border-radius: 28px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 390px;
+    }
+    .status {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 22px 6px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    .screen {
+      background: var(--surface);
+      min-height: 640px;
+      padding: 8px 20px 28px;
+    }
+    .screen[hidden] { display: none !important; }
+    .brand {
+      margin: 0 0 12px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+    .screen h2 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      font-weight: 500;
+      letter-spacing: -0.03em;
+    }
+    .screen h3 {
+      margin: 18px 0 8px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+    .lead {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fafaf9;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 400;
+      min-height: 42px;
+      padding: 0 12px;
+    }
+    .field textarea { padding: 10px 12px; min-height: 84px; resize: vertical; }
+    .primary {
+      width: 100%;
+      height: 44px;
+      border: 0;
+      border-radius: 11px;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font: inherit;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .secondary {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .row { display: flex; gap: 8px; margin-top: 10px; }
+    .row > * { flex: 1; }
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #fafaf9;
+    }
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .hint { margin: 0 0 12px; font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+    }
+    .badge.ok { color: var(--ok); }
+    .badge.hot { color: var(--hot); }
+    .badge.new { color: var(--accent); }
+    .chip {
+      border: 1px solid var(--line);
+      background: transparent;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .chip[aria-pressed="true"] {
+      border-color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, white);
+    }
+    .filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+    .lead-row {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #fff;
+      padding: 12px;
+      margin-bottom: 8px;
+      font: inherit;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .lead-row.has-unread {
+      border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+      background: color-mix(in srgb, var(--accent) 6%, white);
+    }
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .name-row { display: flex; align-items: center; gap: 8px; margin-bottom: 2px; }
+    .name { font-size: 15px; font-weight: 500; }
+    .dot {
+      min-width: 20px;
+      height: 20px;
+      padding: 0 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-size: 11px;
+      font-weight: 500;
+      display: inline-grid;
+      place-items: center;
+    }
+    .snip { font-size: 13px; color: var(--muted); line-height: 1.35; }
+    .snip strong { color: var(--ink); font-weight: 500; }
+    .back {
+      border: 0;
+      background: transparent;
+      color: var(--accent);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0;
+      cursor: pointer;
+    }
+    .status-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .status-btns button {
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fafaf9;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .status-btns button[aria-pressed="true"] {
+      border-color: var(--accent);
+      box-shadow: inset 0 0 0 1px var(--accent);
+    }
+    .msg {
+      border-top: 1px solid var(--line);
+      padding-top: 10px;
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .msg.latest {
+      border-left: 3px solid var(--accent);
+      padding-left: 10px;
+      background: color-mix(in srgb, var(--accent) 8%, white);
+      border-radius: 0 8px 8px 0;
+    }
+    .msg .when { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+    .toast {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #ecfdf5;
+      color: #065f46;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .toast[hidden] { display: none !important; }
+    .notes {
+      background: #fff;
+      border: 1px solid #a8a29e;
+      border-radius: 12px;
+      padding: 14px;
+      font-size: 13px;
+      line-height: 1.45;
+      color: var(--muted);
+    }
+    .notes strong { color: var(--ink); }
+    #imap-panel[hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <h1 class="doc">Quote Desk — UI prototype</h1>
+  <p class="doc">
+    Design handoff for implementers. Pair with <code>quote-desk-ui-spec.md</code>.
+    Use left nav to switch screens. Not a production app.
+  </p>
+
+  <div class="layout" id="app">
+    <div class="nav" role="tablist" aria-label="Screens">
+      <button type="button" data-screen="login" aria-pressed="true">1. Log in</button>
+      <button type="button" data-screen="connect" aria-pressed="false">2. Connect</button>
+      <button type="button" data-screen="settings" aria-pressed="false">3. Settings</button>
+      <button type="button" data-screen="leads" aria-pressed="false">4. Leads</button>
+      <button type="button" data-screen="detail" aria-pressed="false">5. Lead detail</button>
+    </div>
+
+    <div class="phone">
+      <div class="status"><span>9:41</span><span>Quote Desk</span></div>
+
+      <section class="screen" data-panel="login">
+        <p class="brand">Quote Desk</p>
+        <h2>Log in</h2>
+        <p class="lead">Shop owner account. Channels connect next.</p>
+        <label class="field">Email<input value="sam@automagicians.ca" readonly /></label>
+        <label class="field">Password<input type="password" value="password" readonly /></label>
+        <button type="button" class="primary" data-go="connect">Continue</button>
+      </section>
+
+      <section class="screen" data-panel="connect" hidden>
+        <p class="brand">Quote Desk</p>
+        <h2>Connect channels</h2>
+        <p class="lead">Any estimate inbox + a number for texts and calls.</p>
+
+        <div class="card">
+          <div class="switch-row"><span>Estimate inbox</span><span class="badge">Not connected</span></div>
+          <button type="button" class="secondary" style="margin-bottom:8px">Connect with Google</button>
+          <button type="button" class="secondary" id="btn-imap">Other email (IMAP)</button>
+          <div id="imap-panel" hidden style="margin-top:12px">
+            <label class="field">Email address<input placeholder="info@spartancollision.ca" /></label>
+            <label class="field">Password / app password<input type="password" placeholder="Mailbox password" /></label>
+            <label class="field">Preset
+              <select>
+                <option>Generic IMAP</option>
+                <option>Hostinger</option>
+                <option>Doteasy</option>
+                <option>Gmail IMAP</option>
+                <option>Outlook IMAP</option>
+              </select>
+            </label>
+            <p class="hint">Google/Microsoft: use an app password if Connect Google isn’t used.</p>
+            <button type="button" class="secondary">Test connection</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="switch-row"><span>Text &amp; calls</span><span class="badge">Off</span></div>
+          <p class="hint">Twilio number for customer SMS, owner alerts, and inbound calls.</p>
+          <label class="field">Owner mobile (forward)<input value="+1 416 555 0144" /></label>
+          <label class="field">Call mode
+            <select>
+              <option>Both: forward + missed-call text</option>
+              <option>Forward to me</option>
+              <option>Missed-call text only</option>
+            </select>
+          </label>
+          <button type="button" class="secondary">Connect text &amp; calls</button>
+        </div>
+
+        <button type="button" class="primary" data-go="settings">Continue to settings</button>
+      </section>
+
+      <section class="screen" data-panel="settings" hidden>
+        <p class="brand">Settings</p>
+        <h2>Shop setup</h2>
+        <p class="lead">Nudges, review link, first-response templates.</p>
+
+        <h3>Owner notify if quiet</h3>
+        <label class="field">Remind owner after
+          <select>
+            <option>4 hours</option>
+            <option selected>1 day</option>
+            <option>2 days</option>
+            <option>3 days</option>
+          </select>
+        </label>
+        <div class="switch-row"><span>Notify by text</span><input type="checkbox" checked /></div>
+        <div class="switch-row"><span>Notify by email</span><input type="checkbox" checked /></div>
+
+        <h3>Google review</h3>
+        <label class="field">Maps review URL<input value="https://g.page/r/AbCdEf/review" /></label>
+        <p class="hint">Sent only when status is Done.</p>
+
+        <h3>First-response templates</h3>
+        <label class="field">Email template
+          <textarea>Hi {{first_name}}, we got your estimate request about “{{subject}}”. We’ll review and reply shortly. — {{shop_name}}</textarea>
+        </label>
+        <label class="field">Text template
+          <textarea>{{shop_name}}: got your message. We’ll get back to you shortly.</textarea>
+        </label>
+
+        <h3>Other</h3>
+        <div class="switch-row"><span>Auto-ack new quotes only</span><input type="checkbox" checked /></div>
+        <div class="switch-row"><span>Quiet hours</span><input type="checkbox" checked /></div>
+        <button type="button" class="primary" data-go="leads">Save settings</button>
+      </section>
+
+      <section class="screen" data-panel="leads" hidden>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <div>
+            <p class="brand" style="margin:0">Leads</p>
+            <h2 style="font-size:22px;margin:4px 0 0">Hot queue</h2>
+          </div>
+          <button type="button" class="back" data-go="settings">Settings</button>
+        </div>
+        <div class="filters">
+          <button type="button" class="chip" aria-pressed="true">Hot</button>
+          <button type="button" class="chip" aria-pressed="false">New</button>
+          <button type="button" class="chip" aria-pressed="false">Pending</button>
+          <button type="button" class="chip" aria-pressed="false">Done</button>
+          <button type="button" class="chip" aria-pressed="false">All</button>
+        </div>
+        <label class="field">Sort
+          <select><option>Newest first</option><option>Oldest first</option><option>Status</option></select>
+        </label>
+
+        <button type="button" class="lead-row has-unread" data-go="detail">
+          <div class="meta"><span>#104 · email</span><span class="badge hot">Hot</span></div>
+          <div class="name-row"><span class="name">Sam K</span><span class="dot">1</span></div>
+          <div class="snip"><strong>New:</strong> “Any update on the bumper estimate?”</div>
+        </button>
+        <button type="button" class="lead-row has-unread" data-go="detail">
+          <div class="meta"><span>#103 · text</span><span class="badge new">New</span></div>
+          <div class="name-row"><span class="name">Priya N</span><span class="dot">2</span></div>
+          <div class="snip"><strong>New:</strong> “Can you do Saturday?”</div>
+        </button>
+        <button type="button" class="lead-row" data-go="detail">
+          <div class="meta"><span>#99 · email</span><span class="badge ok">Done</span></div>
+          <div class="name-row"><span class="name">Omar H</span></div>
+          <div class="snip">Review link sent · no new messages</div>
+        </button>
+      </section>
+
+      <section class="screen" data-panel="detail" hidden>
+        <button type="button" class="back" data-go="leads">Back to leads</button>
+        <p class="brand" style="margin-top:10px">Lead #104</p>
+        <h2>Sam K</h2>
+        <p class="lead">2018 BMW bumper · email · Sat 6:12pm</p>
+        <p class="hint">AI: new quote (photos + estimate ask). Opening clears unread and focuses latest message.</p>
+
+        <div class="card">
+          <div class="msg">
+            <div class="when">Sat 6:12pm · first request</div>
+            Hi, I hit a pole. Photos attached. Rough estimate?
+          </div>
+          <div class="msg latest" id="latest-msg">
+            <div class="when">Today 9:04am · latest from customer</div>
+            Any update on the bumper estimate?
+          </div>
+        </div>
+
+        <h3>Status</h3>
+        <div class="status-btns">
+          <button type="button" aria-pressed="true">New</button>
+          <button type="button" aria-pressed="false">Pending</button>
+          <button type="button" aria-pressed="false">Done</button>
+          <button type="button" aria-pressed="false">Declined</button>
+        </div>
+
+        <h3>Reply to customer</h3>
+        <div class="row">
+          <button type="button" class="secondary" id="open-email">Open latest email</button>
+          <button type="button" class="secondary" id="open-sms">Open text</button>
+        </div>
+        <p class="hint">Opens Mail/Gmail or Messages on the newest customer message. No in-app compose in POC.</p>
+        <div id="toast" class="toast" hidden role="status"></div>
+      </section>
+    </div>
+
+    <aside class="notes">
+      <strong>For the build agent</strong>
+      <ul>
+        <li>Implement these 5 routes in Next.js to match layout/copy.</li>
+        <li>PWA is required: installable from the browser, standalone on the phone home screen. Not a native store app.</li>
+        <li>IMAP + Twilio phone are required for this POC (see connect screen).</li>
+        <li>Unread badge + open → latest customer message are required behaviors.</li>
+        <li>Full written spec: <code>docs/quote-desk-ui-spec.md</code></li>
+        <li>Product/tech plan: <code>docs/quote-desk-poc-plan.md</code></li>
+      </ul>
+    </aside>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById("app");
+      var panels = root.querySelectorAll("[data-panel]");
+      var nav = root.querySelectorAll(".nav [data-screen]");
+      var toast = document.getElementById("toast");
+      var imapPanel = document.getElementById("imap-panel");
+
+      function show(name) {
+        panels.forEach(function (p) {
+          p.hidden = p.getAttribute("data-panel") !== name;
+        });
+        nav.forEach(function (b) {
+          b.setAttribute("aria-pressed", String(b.getAttribute("data-screen") === name));
+        });
+        if (toast) toast.hidden = true;
+        if (name === "detail") {
+          var latest = document.getElementById("latest-msg");
+          if (latest) latest.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        }
+      }
+
+      nav.forEach(function (b) {
+        b.addEventListener("click", function () {
+          show(b.getAttribute("data-screen"));
+        });
+      });
+      root.querySelectorAll("[data-go]").forEach(function (b) {
+        b.addEventListener("click", function () {
+          show(b.getAttribute("data-go"));
+        });
+      });
+
+      document.getElementById("btn-imap").addEventListener("click", function () {
+        imapPanel.hidden = !imapPanel.hidden;
+      });
+
+      root.querySelectorAll(".filters .chip").forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          root.querySelectorAll(".filters .chip").forEach(function (c) {
+            c.setAttribute("aria-pressed", "false");
+          });
+          chip.setAttribute("aria-pressed", "true");
+        });
+      });
+
+      root.querySelectorAll(".status-btns button").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          root.querySelectorAll(".status-btns button").forEach(function (b) {
+            b.setAttribute("aria-pressed", "false");
+          });
+          btn.setAttribute("aria-pressed", "true");
+          toast.hidden = false;
+          var t = btn.textContent.trim();
+          if (t === "Done") toast.textContent = "Status Done. Google review link queued.";
+          else if (t === "Declined") toast.textContent = "Status Declined. Nudges stopped.";
+          else if (t === "Pending") toast.textContent = "Status Pending. Owner reminders continue.";
+          else toast.textContent = "Status New.";
+        });
+      });
+
+      document.getElementById("open-email").addEventListener("click", function () {
+        toast.hidden = false;
+        toast.textContent = "Would open Gmail/Mail on the latest customer message.";
+      });
+      document.getElementById("open-sms").addEventListener("click", function () {
+        toast.hidden = false;
+        toast.textContent = "Would open Messages for this customer number.";
+      });
+    })();
+  </script>
+</body>
+</html>
