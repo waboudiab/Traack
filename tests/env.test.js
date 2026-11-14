@@ -92,14 +92,12 @@ async function main() {
   }
   const env = loadDotEnv(file);
   const target = targetFromArgs(process.argv);
-  if (!target) {
-    process.exit(reportLocal(env, ".env.local", REQUIRED_ENV, OPTIONAL_ENV));
-  }
-  if (!String(env.CRON_SECRET || "").trim()) {
-    console.log("FAIL CRON_SECRET is missing in .env.local, so production cannot be checked");
-    process.exit(1);
-  }
-  process.exit(await reportRemote(target, env.CRON_SECRET.trim(), REQUIRED_ENV));
+  const code = !target
+    ? reportLocal(env, ".env.local", REQUIRED_ENV, OPTIONAL_ENV)
+    : !String(env.CRON_SECRET || "").trim()
+      ? (console.log("FAIL CRON_SECRET is missing in .env.local, so production cannot be checked"), 1)
+      : await reportRemote(target, env.CRON_SECRET.trim(), REQUIRED_ENV);
+  process.exitCode = code;
 }
 
 main().catch((error) => {
