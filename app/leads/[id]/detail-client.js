@@ -50,21 +50,43 @@ export default function DetailClient({ lead }) {
     }
   }
 
-  async function trashThread() {
+  async function finishAndTrash(next) {
     setPending(true);
     setToast("");
     try {
+      const statusRes = await fetch(`/api/leads/${lead.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: next }),
+      });
+      const statusData = await statusRes.json();
+      if (!statusRes.ok) {
+        setToast(statusData.error || "Could not update the lead.");
+        return;
+      }
+      if (statusData.status !== next) {
+        setStatus(statusData.status || status);
+        setToast(statusData.toast || "Could not update the lead.");
+        return;
+      }
+      setStatus(statusData.status);
+
       const res = await fetch(`/api/leads/${lead.id}/trash`, { method: "POST" });
       const data = await res.json();
       if (!res.ok) {
         setToast(data.error || "Could not move the thread to Trash.");
+        router.refresh();
         return;
       }
       setThreadTrashed(true);
       setTrashedWhen((current) => current || "Just now");
       setConfirmTrash(false);
-      setToast(data.toast);
       router.refresh();
+      if (statusData.leftQueue) {
+        router.push(statusData.reviewQueued ? "/leads?sent=maps" : "/leads");
+        return;
+      }
+      setToast(statusData.toast || data.toast);
     } finally {
       setPending(false);
     }
@@ -141,16 +163,17 @@ export default function DetailClient({ lead }) {
         <div className="trash-block">
           {confirmTrash ? (
             <div className="confirm">
-              <p>Move {lead.name}&apos;s email thread to Gmail Trash? This lead stays in Traack. You can restore it from Gmail Trash for about 30 days.</p>
-              <div className="row">
-                <button className="danger" type="button" disabled={pending} onClick={trashThread}>Move to Trash</button>
-                <button className="secondary" type="button" disabled={pending} onClick={() => setConfirmTrash(false)}>Keep the thread</button>
+              <p>Mark {lead.name} Done or Declined, then move the email thread to Gmail Trash? This lead stays in Traack. You can restore the email from Gmail Trash for about 30 days.</p>
+              <div className="status-btns">
+                <button type="button" disabled={pending} onClick={() => finishAndTrash("done")}>Done</button>
+                <button type="button" disabled={pending} onClick={() => finishAndTrash("declined")}>Declined</button>
               </div>
+              <button className="secondary" type="button" disabled={pending} onClick={() => setConfirmTrash(false)}>Keep the thread</button>
             </div>
           ) : (
             <>
               <button className="danger" type="button" disabled={pending} onClick={() => setConfirmTrash(true)}>Delete thread</button>
-              <p className="hint">Moves the Gmail conversation to Trash. Traack keeps this lead.</p>
+              <p className="hint">Asks you to mark the lead Done or Declined, then moves the Gmail conversation to Trash. Traack keeps this lead.</p>
             </>
           )}
         </div>

@@ -1,4 +1,4 @@
-const CACHE = "traack-v2";
+const CACHE = "traack-v3";
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
@@ -55,17 +55,43 @@ self.addEventListener("push", (event) => {
   );
 });
 
+function openPath(value) {
+  const path = String(value || "/leads");
+  if (!path.startsWith("/") || path.startsWith("//") || path.includes("\\")) return "/leads";
+  return path;
+}
+
+async function openApp(path) {
+  const target = new URL(path, self.location.origin).href;
+  const opened = await self.clients.openWindow(target);
+  if (opened) return opened;
+  const home = new URL("/", self.location.origin);
+  home.searchParams.set("open", path);
+  return self.clients.openWindow(home.href);
+}
+
 self.addEventListener("notificationclick", (event) => {
+  const path = openPath(event.notification.data?.url);
+  const target = new URL(path, self.location.origin).href;
   event.notification.close();
-  const target = new URL(event.notification.data?.url || "/leads", self.location.origin).href;
   event.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then(async (list) => {
-      for (const client of list) {
-        if (!client.url.startsWith(self.location.origin)) continue;
-        if ("navigate" in client) await client.navigate(target);
-        return client.focus();
+      const ours = list.filter((client) => client.url.startsWith(self.location.origin));
+      for (const client of ours) {
+        try {
+          const focused = await client.focus();
+          if (!focused || (focused.visibilityState !== "visible" && !focused.focused)) continue;
+          if (typeof focused.navigate === "function") {
+            await focused.navigate(target);
+            return focused;
+          }
+          focused.postMessage({ type: "traack-open", url: path });
+          return focused;
+        } catch {
+          // This window could not be brought forward. Try the next one, then open the app.
+        }
       }
-      return self.clients.openWindow(target);
+      return openApp(path);
     })
   );
 });
