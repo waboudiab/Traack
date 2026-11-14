@@ -1,5 +1,13 @@
 import { json } from "@/lib/http";
+import { vapidPublicKey } from "@/lib/push";
 import { currentShop } from "@/lib/session";
+
+export async function GET() {
+  const publicKey = vapidPublicKey();
+  const read = new Function("name", "return process.env[name]");
+  const privateKey = String(read("VAPID_PRIVATE_KEY") || "").trim();
+  return json({ public: Boolean(publicKey), private: Boolean(privateKey) });
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
