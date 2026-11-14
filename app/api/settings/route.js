@@ -3,6 +3,7 @@ import { normalizePhone } from "@/lib/phone";
 import { DEFAULT_EMAIL_TEMPLATE, DEFAULT_SMS_TEMPLATE } from "@/lib/presets";
 import { keywordList } from "@/lib/rules";
 import { currentShop } from "@/lib/session";
+import { nudgeMinutes } from "@/lib/time";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -13,7 +14,7 @@ export async function POST(req) {
   if (!ctx?.shop) return json({ error: "Sign in required." }, 401);
 
   const body = await req.json().catch(() => ({}));
-  const nudgeHours = [4, 24, 48, 72].includes(Number(body.nudgeHours)) ? Number(body.nudgeHours) : 24;
+  const nudgeHours = nudgeMinutes(body.nudgeHours);
   const reviewUrl = String(body.reviewUrl || "").trim();
   if (reviewUrl && !/^https?:\/\//i.test(reviewUrl)) {
     return json({ error: "Review link must start with http:// or https://." }, 400);

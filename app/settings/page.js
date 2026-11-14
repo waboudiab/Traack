@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { defaultSettings } from "@/lib/presets";
 import { currentShop } from "@/lib/session";
 import { vapidPublicKey } from "@/lib/push";
+import { nudgeMinutes } from "@/lib/time";
 import SettingsForm from "./settings-form";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +23,7 @@ export default async function SettingsPage() {
   if (!ctx) redirect("/api/session/clear");
   const settings = { ...defaultSettings(), ...(ctx.shop.settings || {}) };
   settings.ownerMobile = ctx.shop.phone?.ownerMobile || settings.ownerMobile || "";
+  settings.nudgeHours = nudgeMinutes(settings.nudgeHours);
   settings.leadKeywords = Array.isArray(settings.leadKeywords) ? settings.leadKeywords.join("\n") : "";
   settings.skipKeywords = Array.isArray(settings.skipKeywords) ? settings.skipKeywords.join("\n") : "";
   return <SettingsForm settings={settings} notifyKey={vapidPublicKey()} />;

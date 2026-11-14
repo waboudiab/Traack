@@ -49,10 +49,13 @@ export default function SettingsForm({ settings, notifyKey }) {
         <label className="field">
           Remind owner after
           <select value={String(form.nudgeHours)} onChange={(event) => set("nudgeHours", Number(event.target.value))}>
-            <option value="4">4 hours</option>
-            <option value="24">1 day</option>
-            <option value="48">2 days</option>
-            <option value="72">3 days</option>
+            <option value="10">10 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="240">4 hours</option>
+            <option value="1440">1 day</option>
+            <option value="2880">2 days</option>
+            <option value="4320">3 days</option>
           </select>
         </label>
         <p className="hint">Fires when the shop still has not replied to the customer after a new lead.</p>
