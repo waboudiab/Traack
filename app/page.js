@@ -4,12 +4,22 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
 import { getDb } from "@/lib/mongo";
 import { hasSessionCookie } from "@/lib/session";
+import Landing from "./landing";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "Traack — Keep the lead in your inbox",
+  description:
+    "Link the business email you already use. Traack sends your reply in minutes, keeps the lead on your phone, and asks for a Google review when the job is done. $19.99 a month.",
+};
+
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  if (!session?.user?.id) redirect((await hasSessionCookie()) ? "/api/session/clear" : "/login");
+  if (!session?.user?.id) {
+    if (await hasSessionCookie()) redirect("/api/session/clear");
+    return <Landing />;
+  }
 
   if (!ObjectId.isValid(session.user.id)) redirect("/api/session/clear");
 

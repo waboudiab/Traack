@@ -10,9 +10,9 @@ const googleErrors = {
   google: "Google sign-in did not finish. Try again.",
 };
 
-export default function LoginForm({ googleEnabled, ticket, errorCode }) {
+export default function LoginForm({ googleEnabled, ticket, errorCode, startNew }) {
   const router = useRouter();
-  const [creating, setCreating] = useState(errorCode === "need_shop" || errorCode === "no_shop");
+  const [creating, setCreating] = useState(startNew || errorCode === "need_shop" || errorCode === "no_shop");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,7 +86,11 @@ export default function LoginForm({ googleEnabled, ticket, errorCode }) {
     <main className="screen">
       <p className="brand">Traack</p>
       <h2>{creating ? "Create account" : "Log in"}</h2>
-      <p className="lead">Shop owner account. Channels connect next.</p>
+      <p className="lead">
+        {creating
+          ? "$19.99 a month. The inbox connects next."
+          : "Shop owner account. Channels connect next."}
+      </p>
       {error ? <p className="error">{error}</p> : null}
       {creating ? (
         <label className="field">

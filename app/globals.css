@@ -423,3 +423,455 @@ a.secondary {
 }
 
 .person { margin: 0 0 4px; font-size: 13px; }
+
+.land {
+  min-height: 100vh;
+  padding-bottom: calc(96px + env(safe-area-inset-bottom));
+}
+
+.land-wrap {
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.land-nav {
+  position: sticky;
+  top: 0;
+  z-index: 15;
+  background: color-mix(in srgb, var(--bg) 90%, white);
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+}
+
+.land-nav-inner,
+.land-foot-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+}
+
+.land-logo {
+  color: var(--gold);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.land-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.land-nav-links a {
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.land-btn,
+.land-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.land-btn {
+  border: 0;
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.land-btn-small {
+  min-height: 38px;
+  padding: 0 12px;
+  font-size: 14px;
+}
+
+.land-btn-ghost {
+  border: 1px solid #d9ccec;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.land-btn:focus-visible,
+.land-btn-ghost:focus-visible,
+.land-nav-links a:focus-visible {
+  outline: 2px solid var(--accent-deep);
+  outline-offset: 2px;
+}
+
+.land-hero {
+  padding: 48px 0 20px;
+}
+
+.land-hero-grid,
+.land-split,
+.land-price-layout,
+.land-install-grid {
+  display: grid;
+  gap: 36px;
+  align-items: center;
+}
+
+.land-hero-grid { grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr); }
+.land-split,
+.land-price-layout { grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr); align-items: start; }
+.land-install-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; }
+
+.land h1,
+.land-section h2,
+.land-band h2,
+.land-close h2 {
+  margin: 0 0 14px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.land h1 { font-size: clamp(40px, 6vw, 64px); }
+.land-section h2,
+.land-band h2,
+.land-close h2 { font-size: clamp(30px, 4vw, 44px); }
+
+.land-dek {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.land-dek-narrow { max-width: 680px; }
+
+.land-callout {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid #e8c872;
+  background: #fff8e6;
+  color: var(--accent-deep);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+mark.land-mark {
+  background: #f8e7b0;
+  color: var(--ink);
+  font-weight: 500;
+  padding: 0.05em 0.28em;
+  border-radius: 5px;
+}
+
+.land-point-key {
+  border-color: #e8c872;
+  background: #fffaf0;
+  box-shadow: 0 0 0 1px #e8c872;
+}
+
+.land-status { margin-top: 14px; }
+.land-status .status-btns { margin: 0; }
+.land-point p.land-tap {
+  margin: 0 0 8px;
+  color: var(--accent-deep);
+  font-size: 13px;
+  font-weight: 500;
+}
+.land-status button {
+  cursor: default;
+  pointer-events: none;
+}
+
+.land-point p strong,
+.land-dek strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.land-price-card li.land-key {
+  color: #e8c872;
+  font-weight: 500;
+}
+
+.land-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.land-price-line {
+  margin: 0;
+  color: var(--accent-deep);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.land-section,
+.land-band,
+.land-close { scroll-margin-top: 76px; }
+.land-section { padding: 64px 0; }
+.land-band {
+  padding: 64px 0;
+  background: var(--surface);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.land-points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.land-point,
+.land-panel,
+.land-price-card,
+.land-review-sample {
+  background: var(--surface);
+  border: 1px solid #d9ccec;
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.land-band .land-point,
+.land-band .land-panel { background: var(--paper); }
+
+.land-point h3,
+.land-panel-title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.land-point p,
+.land-steps,
+.land-price-card li {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.land-num {
+  margin: 0 0 10px;
+  color: var(--gold);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+}
+
+.land-steps {
+  margin: 0 0 16px;
+  padding-left: 18px;
+}
+
+.land-steps li + li { margin-top: 8px; }
+
+.land-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.land-chips span,
+.land-chip-on,
+.land-sample {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+}
+
+.land-sample { width: fit-content; align-self: flex-start; margin: 0 0 10px; color: var(--gold); }
+
+.land-chip-on {
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, white);
+  color: var(--accent-deep);
+}
+
+.land-panel .hint:last-child { margin-bottom: 0; }
+
+.land-fake-btn {
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.land-thread { display: flex; flex-direction: column; gap: 12px; }
+
+.land-mail {
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 14px 14px 0;
+  background: color-mix(in srgb, var(--accent) 6%, white);
+  padding: 14px;
+}
+
+.land-mail p { margin: 0; font-size: 15px; line-height: 1.45; }
+.land-mail-sent { border-left-color: var(--ok); background: #f3faf6; }
+.land-mail-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.land-mail-who {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.land-quote {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.land-price-card {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: #fff;
+}
+
+.land-price-card .hint { color: #f6e7b2; }
+.land-price-kicker {
+  margin: 0;
+  color: #e8c872;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.land-price-figure {
+  margin: 6px 0;
+  font-size: 64px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.land-price-figure-month { font-size: 52px; }
+
+.land-price-then { margin: 0 0 14px; font-size: 16px; }
+.land-price-then strong { font-weight: 500; }
+
+.land-price-card ul {
+  margin: 0 0 16px;
+  padding-left: 18px;
+}
+
+.land-price-card li { color: #f7f1ff; }
+.land-price-card li + li { margin-top: 6px; }
+.land-price-card .land-btn { width: 100%; background: #e8c872; color: var(--ink); }
+
+.land-install-grid .land-btn { margin-top: 14px; }
+.land-install-grid .land-steps { margin: 0; }
+
+.land-close {
+  padding: 72px 0;
+  text-align: center;
+}
+
+.land-close .land-dek {
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.land-foot {
+  border-top: 1px solid var(--line);
+  padding-bottom: 12px;
+}
+
+.land-foot p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.land-figure { margin: 0; }
+.land-figure figcaption {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.land-phone {
+  width: min(340px, 100%);
+  margin: 0 auto;
+  padding: 12px 12px 16px;
+  border-radius: 32px;
+  background: var(--accent-deep);
+  box-shadow:
+    0 0 0 1px #e8c872,
+    0 24px 50px rgb(59 7 100 / 22%);
+}
+
+.land-phone-bar {
+  display: grid;
+  place-items: center;
+  height: 16px;
+}
+
+.land-phone-bar span {
+  width: 72px;
+  height: 5px;
+  border-radius: 999px;
+  background: rgb(255 255 255 / 35%);
+}
+
+.land-phone-screen {
+  background: var(--surface);
+  border-radius: 22px;
+  padding: 14px 12px 8px;
+}
+
+.land-phone h2 {
+  margin: 4px 0 0;
+  font-size: 22px;
+  letter-spacing: -0.03em;
+}
+
+.land-phone button { cursor: default; }
+.land-phone .lead-row,
+.land-phone .chip,
+.land-phone .badge { pointer-events: none; }
+
+@media (max-width: 860px) {
+  .land-hero-grid,
+  .land-split,
+  .land-price-layout,
+  .land-install-grid,
+  .land-points {
+    grid-template-columns: 1fr;
+  }
+
+  .land-hero { padding-top: 28px; }
+  .land-anchor { display: none; }
+  .land-figure { margin-top: 8px; }
+}

@@ -19,6 +19,7 @@ export default async function LoginPage({ searchParams }) {
         googleEnabled={googleConfigured()}
         ticket={String(query.ticket || "")}
         errorCode={String(query.error || "")}
+        startNew={String(query.new || "") === "1"}
       />
     );
   }

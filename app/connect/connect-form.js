@@ -80,13 +80,13 @@ export default function ConnectForm({ shop, googleEnabled, googleRedirectUri, no
     <main className="screen">
       <p className="brand">Traack</p>
       <h2>Connect channels</h2>
-      <p className="lead">Any estimate inbox + a number for texts and calls.</p>
+      <p className="lead">The shop email clients already write to, plus a number for texts and calls.</p>
       {error ? <p className="error">{error}</p> : null}
       {message ? <p className="toast">{message}</p> : null}
 
       <div className="card">
         <div className="switch-row">
-          <span>Estimate inbox</span>
+          <span>Client query box</span>
           <span className={emailConnected ? "badge ok" : "badge"}>{emailConnected ? "Connected" : "Not connected"}</span>
         </div>
         {emailConnected ? <p className="hint">{connected.username} · {connected.type === "gmail" ? "Google" : "IMAP"}</p> : null}
