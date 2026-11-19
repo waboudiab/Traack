@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Traack — Keep the lead in your inbox",
   description:
-    "Link the business email you already use. Traack sends your reply in minutes, keeps the lead on your phone, and asks for a Google review when the job is done. $19.99 a month.",
+    "Link the business email you already use. Traack sends your reply in minutes, keeps the lead on your phone, and asks for a Google review when the job is done. First month free, then $19.99 a month.",
 };
 
 export default async function Home() {

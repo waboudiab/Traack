@@ -45,7 +45,7 @@ export default function Landing() {
             <a className="land-anchor" href="#reviews">Reviews</a>
             <a className="land-anchor" href="#price">Price</a>
             <Link className="land-login" href="/login">Log in</Link>
-            <Link className="land-btn land-btn-small" href={START}>Get started</Link>
+            <Link className="land-btn land-btn-small" href={START}>Start free month</Link>
           </nav>
         </div>
       </header>
@@ -62,14 +62,14 @@ export default function Landing() {
                 <mark className="land-mark">asks for the Google review</mark> that brings the next customer.
               </p>
               <div className="land-actions">
-                <Link className="land-btn" href={START}>Get started</Link>
+                <Link className="land-btn" href={START}>Start the free month</Link>
                 {prompt ? (
                   <button className="land-btn-ghost" type="button" onClick={install}>Install Traack</button>
                 ) : (
                   <a className="land-btn-ghost" href="#get-app">Add it to your phone</a>
                 )}
               </div>
-              <p className="land-price-line">$19.99 a month, flat.</p>
+              <p className="land-price-line">First month free, no strings. Then $19.99 a month, flat.</p>
             </div>
             <QueuePhone />
           </div>
@@ -252,15 +252,15 @@ export default function Landing() {
           <div className="land-wrap land-price-layout">
             <div>
               <p className="brand">Price</p>
-              <h2 id="price-title">One flat price.</h2>
+              <h2 id="price-title">One month free. Then one flat price.</h2>
               <p className="land-dek">
-                Traack is $19.99 a month. Same price every month. The return is the lead you kept and the review that brought the next job.
+                Use it on real customer mail before you pay anything. After the free month, Traack is $19.99 a month. Same price every month. The return is the lead you kept and the review that brought the next job.
               </p>
             </div>
             <div className="land-price-card">
-              <p className="land-price-kicker">Each month</p>
-              <p className="land-price-figure land-price-figure-month">$19.99</p>
-              <p className="land-price-then">per month</p>
+              <p className="land-price-kicker">First month</p>
+              <p className="land-price-figure">$0</p>
+              <p className="land-price-then">Then <strong>$19.99</strong> / month</p>
               <ul>
                 <li>Connects to the shop email you already own</li>
                 <li>Hot queue on your phone</li>
@@ -268,8 +268,8 @@ export default function Landing() {
                 <li>A nudge on the interval you set, when the lead is still unanswered</li>
                 <li className="land-key">Google Maps link when you mark the job Done</li>
               </ul>
-              <Link className="land-btn" href={START}>Get started</Link>
-              <p className="hint">One flat price. $19.99 a month.</p>
+              <Link className="land-btn" href={START}>Start the free month</Link>
+              <p className="hint">No card to start. No setup fee. No contract. Stop before the paid month and that is the end of it.</p>
             </div>
           </div>
         </section>
@@ -296,7 +296,7 @@ export default function Landing() {
                 {prompt ? (
                   <button className="land-btn" type="button" onClick={install}>Install Traack</button>
                 ) : mode === "installed" ? (
-                  <Link className="land-btn" href={START}>Get started</Link>
+                  <Link className="land-btn" href={START}>Start the free month</Link>
                 ) : null}
               </article>
               <article className="land-point">
@@ -323,7 +323,7 @@ export default function Landing() {
           <div className="land-wrap">
             <h2>Your next lead is already in the inbox.</h2>
             <p className="land-dek">Answer it in minutes. <mark className="land-mark">Ask for the review when the job is Done.</mark> Keep the work that would have gone quiet.</p>
-            <Link className="land-btn" href={START}>Get started</Link>
+            <Link className="land-btn" href={START}>Start the free month</Link>
           </div>
         </section>
       </main>
@@ -331,7 +331,7 @@ export default function Landing() {
       <footer className="land-foot">
         <div className="land-wrap land-foot-inner">
           <span className="land-logo">Traack</span>
-          <p>$19.99 a month.</p>
+          <p>First month free, then $19.99 a month.</p>
           <Link href="/login">Log in</Link>
         </div>
       </footer>

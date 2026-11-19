@@ -88,7 +88,7 @@ export default function LoginForm({ googleEnabled, ticket, errorCode, startNew }
       <h2>{creating ? "Create account" : "Log in"}</h2>
       <p className="lead">
         {creating
-          ? "$19.99 a month. The inbox connects next."
+          ? "First month free, then $19.99 a month. The inbox connects next."
           : "Shop owner account. Channels connect next."}
       </p>
       {error ? <p className="error">{error}</p> : null}
