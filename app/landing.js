@@ -44,6 +44,7 @@ export default function Landing() {
             <a className="land-anchor" href="#reply">Replies</a>
             <a className="land-anchor" href="#reviews">Reviews</a>
             <a className="land-anchor" href="#price">Price</a>
+            <a className="land-anchor" href="#about">About</a>
             <Link className="land-login" href="/login">Log in</Link>
             <Link className="land-btn land-btn-small" href={START}>Start free month</Link>
           </nav>
@@ -55,11 +56,13 @@ export default function Landing() {
           <div className="land-wrap land-hero-grid">
             <div>
               <p className="brand">For shops that live in their inbox</p>
-              <h1>Keep the lead. Make more money.</h1>
+              <h1>Your next lead is already in the inbox.</h1>
+              <p className="land-promise">
+                Convert it into money by being quick to reply.<br />
+                Boost your shop’s Google rating by asking for reviews.
+              </p>
               <p className="land-dek">
-                You keep the shop email customers already use. Traack connects to it. A new estimate shows up on your phone,{" "}
-                <mark className="land-mark">your customer gets your reply in minutes</mark>, and a finished job{" "}
-                <mark className="land-mark">asks for the Google review</mark> that brings the next customer.
+                You keep the shop email customers already use. Traack connects to it, puts the new estimate on your phone, and sends the review ask when you mark the job Done.
               </p>
               <div className="land-actions">
                 <Link className="land-btn" href={START}>Start the free month</Link>
@@ -319,11 +322,22 @@ export default function Landing() {
           </div>
         </section>
 
+        <section className="land-section" id="about" aria-labelledby="about-title">
+          <div className="land-wrap">
+            <p className="brand">About us</p>
+            <h2 id="about-title">Royal Tech, based in the GTA.</h2>
+            <p className="land-dek land-dek-narrow">
+              Royal Tech is a software company in the Greater Toronto Area. We build tools for a small business: an HVAC company, a cleaning crew, a shop, or any business whose next job is already in the inbox. Traack connects to the email those clients already use. A fast reply keeps the lead, and asking for the review lifts the Google rating.
+            </p>
+          </div>
+        </section>
+
         <section className="land-close">
           <div className="land-wrap">
             <h2>Your next lead is already in the inbox.</h2>
             <p className="land-dek">Answer it in minutes. <mark className="land-mark">Ask for the review when the job is Done.</mark> Keep the work that would have gone quiet.</p>
             <Link className="land-btn" href={START}>Start the free month</Link>
+            <p className="land-soon land-soon-end"><span>Coming soon</span> Phone calls and text inquiries become leads too.</p>
           </div>
         </section>
       </main>
@@ -331,7 +345,7 @@ export default function Landing() {
       <footer className="land-foot">
         <div className="land-wrap land-foot-inner">
           <span className="land-logo">Traack</span>
-          <p>First month free, then $19.99 a month.</p>
+          <p>First month free, then $19.99 a month. Royal Tech, GTA.</p>
           <Link href="/login">Log in</Link>
         </div>
       </footer>
