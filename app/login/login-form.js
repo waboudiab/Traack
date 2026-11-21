@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const googleErrors = {
-  need_shop: "Enter the shop name, then continue with Google.",
-  no_shop: "No shop uses that Google account. Create one and enter the shop name.",
+  need_shop: "Enter the business name, then continue with Google.",
+  no_shop: "No business uses that Google account. Create one and enter the business name.",
   google: "Google sign-in did not finish. Try again.",
 };
 
@@ -46,7 +46,7 @@ export default function LoginForm({ googleEnabled, ticket, errorCode, startNew }
     setError("");
     const shopName = name.trim();
     if (creating && shopName.length < 2) {
-      setError("Enter the shop name.");
+      setError("Enter the business name.");
       return;
     }
     const url = new URL("/api/auth/google", window.location.origin);
@@ -89,12 +89,12 @@ export default function LoginForm({ googleEnabled, ticket, errorCode, startNew }
       <p className="lead">
         {creating
           ? "First month free, then $19.99 a month. The inbox connects next."
-          : "Shop owner account. Channels connect next."}
+          : "Business account. Channels connect next."}
       </p>
       {error ? <p className="error">{error}</p> : null}
       {creating ? (
         <label className="field">
-          Shop name
+          Business name
           <input value={name} onChange={(event) => setName(event.target.value)} autoComplete="organization" />
         </label>
       ) : null}
@@ -103,7 +103,7 @@ export default function LoginForm({ googleEnabled, ticket, errorCode, startNew }
           <button className="secondary" type="button" disabled={pending} onClick={continueGoogle}>
             Continue with Google
           </button>
-          <p className="hint">Signs you into Traack. The shop inbox connects on the next screen.</p>
+          <p className="hint">Signs you into Traack. The business inbox connects on the next screen.</p>
           <p className="or">or</p>
         </>
       ) : null}
@@ -123,7 +123,7 @@ export default function LoginForm({ googleEnabled, ticket, errorCode, startNew }
       </form>
       <p className="links">
         <button className="back" type="button" onClick={() => { setCreating((value) => !value); setError(""); }}>
-          {creating ? "Have an account? Log in" : "Create a shop account"}
+          {creating ? "Have an account? Log in" : "Create a business account"}
         </button>
       </p>
     </main>

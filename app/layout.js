@@ -6,7 +6,7 @@ import InstallHint from "./install-hint";
 
 export const metadata = {
   title: APP_NAME,
-  description: "Organize shop leads from email and phone.",
+  description: "Organize business leads from email and phone.",
   applicationName: APP_NAME,
   appleWebApp: {
     capable: true,

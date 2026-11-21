@@ -41,7 +41,7 @@ export default function SettingsForm({ settings, notifyKey }) {
   return (
     <main className="screen">
       <p className="brand">Settings</p>
-      <h2>Shop setup</h2>
+      <h2>Business setup</h2>
       <p className="lead">Nudges, review link, first-response templates.</p>
       {error ? <p className="error">{error}</p> : null}
       <form onSubmit={onSubmit}>
@@ -59,7 +59,7 @@ export default function SettingsForm({ settings, notifyKey }) {
             <option value="4320">3 days</option>
           </select>
         </label>
-        <p className="hint">Fires when the shop still has not replied. The automatic first reply does not count. The email and the phone alert include Pending, Done, and Declined. Checks run about every 15 minutes.</p>
+        <p className="hint">Fires when the business still has not replied. The automatic first reply does not count. The email and the phone alert include Pending, Done, and Declined. Checks run about every 15 minutes.</p>
         <div className="switch-row">
           <span>Notify by text</span>
           <input type="checkbox" checked={form.notifySms} onChange={(event) => set("notifySms", event.target.checked)} />
@@ -97,7 +97,7 @@ export default function SettingsForm({ settings, notifyKey }) {
             placeholder={"bumper\ndent\nleak"}
           />
         </label>
-        <p className="hint">Already counted: {BUILTIN_LEAD_WORDS.join(", ")}. Add words this shop’s customers use, one per line or separated by commas.</p>
+        <p className="hint">Already counted: {BUILTIN_LEAD_WORDS.join(", ")}. Add words this business’s customers use, one per line or separated by commas.</p>
         <label className="field">
           Skip words
           <textarea

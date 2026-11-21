@@ -55,22 +55,17 @@ export default function Landing() {
         <section className="land-hero">
           <div className="land-wrap land-hero-grid">
             <div>
-              <p className="brand">For shops that live in their inbox</p>
+              <p className="brand">For businesses that live in their inbox</p>
               <h1>Your next lead is already in the inbox.</h1>
               <p className="land-promise">
-                Convert it into money by being quick to reply.<br />
-                Boost your shop’s Google rating by asking for reviews.
+                Convert it into revenue by being quick to reply.<br />
+                Boost your business’s Google rating by asking for reviews.
               </p>
               <p className="land-dek">
-                You keep the shop email customers already use. Traack connects to it, puts the new estimate on your phone, and sends the review ask when you mark the job Done.
+                You keep the business email customers already use. Traack connects to it, puts the new estimate on your phone, and sends the review ask when you mark the job Done.
               </p>
               <div className="land-actions">
                 <Link className="land-btn" href={START}>Start the free month</Link>
-                {prompt ? (
-                  <button className="land-btn-ghost" type="button" onClick={install}>Install Traack</button>
-                ) : (
-                  <a className="land-btn-ghost" href="#get-app">Add it to your phone</a>
-                )}
               </div>
               <p className="land-price-line">First month free, no strings. Then $19.99 a month, flat.</p>
             </div>
@@ -80,9 +75,9 @@ export default function Landing() {
 
         <section className="land-section" aria-labelledby="money-title">
           <div className="land-wrap">
-            <h2 id="money-title">A watched lead is a job you can still win</h2>
+            <h2 id="money-title">A tracked lead is a job you can still win</h2>
             <p className="land-dek land-dek-narrow">
-              Maya writes three shops about a cracked bumper. The shop that answers first, while she is still looking at her phone, is the one she books. Traack is that answer, connected to the shop email you already own.
+              Maya writes three businesses about a cracked bumper. The business that answers first, while she is still looking at her phone, is the one she books. Traack is that answer, connected to the business email you already own.
             </p>
             <div className="land-points">
               <article className="land-point">
@@ -111,14 +106,14 @@ export default function Landing() {
           <div className="land-wrap land-split">
             <div>
               <p className="brand">Your email</p>
-              <h2 id="inbox-title">You keep your shop email. Traack connects to it.</h2>
+              <h2 id="inbox-title">You keep your business email. Traack connects to it.</h2>
               <p className="land-callout">That mailbox stays yours. Customers already write to it. Traack connects to it.</p>
               <p className="land-dek">
-                Connect Google, or the mailbox on your own domain. New estimates from that inbox show on your phone, and replies go out from the same shop email.
+                Connect Google, or the mailbox on your own domain. New estimates from that inbox show on your phone, and replies go out from the same business email.
               </p>
               <ol className="land-steps">
                 <li>Connect the email you already own. Google is one step. Hostinger, Outlook, Gmail, Doteasy, and other IMAP mailboxes use the address and password.</li>
-                <li>Estimates sent to that shop email show on your phone.</li>
+                <li>Estimates sent to that business email show on your phone.</li>
               </ol>
               <div className="land-chips" aria-label="Inboxes Traack can link">
                 <span>Google</span>
@@ -137,13 +132,13 @@ export default function Landing() {
                   <span>info@northsideauto.com</span>
                   <span className="badge ok">Connected</span>
                 </div>
-                <p className="hint">The shop email clients already write their queries to</p>
+                <p className="hint">The business email clients already write their queries to</p>
               </div>
               <div className="stack">
                 <span className="secondary land-fake-btn">Connect with Google</span>
                 <span className="secondary land-fake-btn">Other email (IMAP)</span>
               </div>
-              <p className="hint">Sample. Your shop name and mailbox go here after you start.</p>
+              <p className="hint">Sample. Your business name and mailbox go here after you start.</p>
             </div>
           </div>
         </section>
@@ -151,10 +146,10 @@ export default function Landing() {
         <section className="land-section" id="reply" aria-labelledby="reply-title">
           <div className="land-wrap">
             <p className="brand">Custom reply</p>
-            <h2 id="reply-title">They hear from you before they call the next shop</h2>
+            <h2 id="reply-title">They hear from you before they call the next business</h2>
             <p className="land-callout">You write the reply once. Traack sends it in minutes from your business email.</p>
             <p className="land-dek land-dek-narrow">
-              Traack fills in the customer’s name, the subject, and your shop name. That quick note is what keeps the lead.
+              Traack fills in the customer’s name, the subject, and your business name. That quick note is what keeps the lead.
             </p>
             <div className="land-split">
               <div className="land-thread">
@@ -189,7 +184,7 @@ export default function Landing() {
                     <span>Next day</span>
                   </div>
                   <p className="land-mail-who">Text, email, and phone</p>
-                  <p>Traack: lead #104 from Maya Chen still has no shop reply.</p>
+                  <p>Traack: lead #104 from Maya Chen still has no reply.</p>
                 </article>
               </div>
               <div className="land-panel">
@@ -216,16 +211,11 @@ export default function Landing() {
               <h2 id="reviews-title">Reviews are how the next customer finds you</h2>
               <p className="land-callout">Traack sends your Maps link when you mark the lead Done.</p>
               <p className="land-dek">
-                People search the job, then look at the listing. The star rating, the words, and how recent those reviews are decide whether they tap your number. <mark className="land-mark">A shop that keeps collecting new reviews gets more of those calls.</mark> That traffic comes from Google, and the cost is asking at the right moment.
+                People search the job, then look at the listing. The star rating, the words, and how recent those reviews are decide whether they tap your number. <mark className="land-mark">A business that keeps collecting new reviews gets more of those calls.</mark> That traffic comes from Google, and the cost is asking at the right moment.
               </p>
               <p className="land-dek">
                 The link goes from the same business email, while the work is still fresh. You paste it once in settings. Declined jobs are left alone.
               </p>
-              <div className="land-review-sample">
-                <p className="land-sample">Sample review a finished job can earn</p>
-                <p className="land-quote">Bumper was ready Thursday, and the price was what they said. Easy to deal with.</p>
-                <p className="hint">Maya C. · Google review</p>
-              </div>
             </div>
             <div className="land-panel" aria-hidden="true">
               <p className="brand">Lead #104</p>
@@ -241,7 +231,7 @@ export default function Landing() {
               <div className="toast">Google Maps link sent. This lead left the queue.</div>
               <div className="msg latest">
                 <div className="when">Just now · sent from your inbox</div>
-                Thanks Maya. Here is our Google Maps link: maps.app.goo.gl/your-shop
+                Thanks Maya. Here is our Google Maps link: maps.app.goo.gl/your-business
               </div>
               <div className="checks">
                 <span className="check">✓ Reply</span>
@@ -265,7 +255,7 @@ export default function Landing() {
               <p className="land-price-figure">$0</p>
               <p className="land-price-then">Then <strong>$19.99</strong> / month</p>
               <ul>
-                <li>Connects to the shop email you already own</li>
+                <li>Connects to the business email you already own</li>
                 <li>Hot queue on your phone</li>
                 <li>Your custom first reply</li>
                 <li>A nudge on the interval you set, when the lead is still unanswered</li>
@@ -288,7 +278,7 @@ export default function Landing() {
               <article className="land-point">
                 <h3>{prompt || mode === "installed" ? "On this phone" : "Install it where you work"}</h3>
                 {mode === "installed" ? (
-                  <p>Traack is already on this phone. Create the shop and the hot queue opens from the icon.</p>
+                  <p>Traack is already on this phone. Create the business and the hot queue opens from the icon.</p>
                 ) : prompt ? (
                   <p>Tap Install. The icon opens Traack full screen, on the hot queue.</p>
                 ) : mode === "ios" ? (

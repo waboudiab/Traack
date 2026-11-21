@@ -4,7 +4,7 @@ export default function manifest() {
   return {
     name: APP_NAME,
     short_name: APP_NAME,
-    description: "Organize shop leads from email and phone.",
+    description: "Organize business leads from email and phone.",
     start_url: "/",
     scope: "/",
     display: "standalone",

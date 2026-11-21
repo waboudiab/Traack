@@ -80,7 +80,7 @@ export default function ConnectForm({ shop, googleEnabled, googleRedirectUri, no
     <main className="screen">
       <p className="brand">Traack</p>
       <h2>Connect channels</h2>
-      <p className="lead">The shop email clients already write to, plus a number for texts and calls.</p>
+      <p className="lead">The business email clients already write to, plus a number for texts and calls.</p>
       {error ? <p className="error">{error}</p> : null}
       {message ? <p className="toast">{message}</p> : null}
 
