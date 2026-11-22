@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import BillingBanner from "../billing-banner";
 
 const filters = [
   ["hot", "Hot"],
@@ -18,7 +19,7 @@ function badgeFor(lead) {
   return ["new", "New"];
 }
 
-export default function LeadsList({ leads, notice }) {
+export default function LeadsList({ leads, notice, billingMessage }) {
   const [filter, setFilter] = useState("hot");
   const [sort, setSort] = useState("newest");
 
@@ -43,6 +44,7 @@ export default function LeadsList({ leads, notice }) {
 
   return (
     <main className="screen">
+      <BillingBanner message={billingMessage} />
       <div className="top">
         <div>
           <p className="brand" style={{ margin: 0 }}>Leads</p>

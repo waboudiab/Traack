@@ -359,6 +359,20 @@ a.secondary {
   line-height: 1.4;
 }
 
+.billing-banner {
+  display: block;
+  margin: 0 0 14px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #e8c872;
+  background: #fff8e6;
+  color: var(--accent-deep);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
 .install-bar {
   position: fixed;
   left: 12px;

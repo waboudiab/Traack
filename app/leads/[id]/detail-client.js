@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import BillingBanner from "../../billing-banner";
 
 const statuses = ["new", "pending", "done", "declined"];
 const labels = { new: "New", pending: "Pending", done: "Done", declined: "Declined" };
 
-export default function DetailClient({ lead }) {
+export default function DetailClient({ lead, billingMessage }) {
   const router = useRouter();
   const [status, setStatus] = useState(lead.status);
   const [toast, setToast] = useState("");
@@ -119,6 +120,7 @@ export default function DetailClient({ lead }) {
 
   return (
     <main className="screen">
+      <BillingBanner message={billingMessage} />
       <button className="back" type="button" onClick={() => router.push("/leads")}>Back to leads</button>
       <p className="brand" style={{ marginTop: 10 }}>Lead #{lead.number}</p>
       <h2>{lead.name}</h2>

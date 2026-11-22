@@ -5,12 +5,15 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BUILTIN_LEAD_WORDS } from "@/lib/rules";
 import NotifyButton from "../notify-button";
+import BillingBanner from "../billing-banner";
 
-export default function SettingsForm({ settings, notifyKey }) {
+export default function SettingsForm({ settings, notifyKey, billing }) {
   const router = useRouter();
   const [form, setForm] = useState(settings);
   const [error, setError] = useState("");
   const [pending, setPending] = useState(false);
+  const [cardNote, setCardNote] = useState(billing?.note || "");
+  const [cardPending, setCardPending] = useState(false);
 
   function set(key, value) {
     setForm((current) => ({ ...current, [key]: value }));
@@ -38,12 +41,44 @@ export default function SettingsForm({ settings, notifyKey }) {
     }
   }
 
+  async function openCard(path) {
+    setCardNote("");
+    setCardPending(true);
+    try {
+      const res = await fetch(path, { method: "POST" });
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        setCardNote(data.error || "Could not open the card page.");
+        return;
+      }
+      window.location.assign(data.url);
+    } catch {
+      setCardNote("Could not open the card page.");
+    } finally {
+      setCardPending(false);
+    }
+  }
+
+  const cardOnFile = billing?.paid;
+  const cardLabel = cardOnFile ? "Manage card" : "Add a card";
+
   return (
     <main className="screen">
+      <BillingBanner message={billing?.message} />
       <p className="brand">Settings</p>
       <h2>Business setup</h2>
       <p className="lead">Nudges, review link, first-response templates.</p>
       {error ? <p className="error">{error}</p> : null}
+      <div className="card" id="billing">
+        <h3 style={{ marginTop: 0 }}>Card</h3>
+        <p className="hint">First month free, then $19.99 a month. The free month ends {billing?.endsLabel || "in 30 days"}.</p>
+        {cardOnFile ? <p className="hint">A card is on file. $19.99 starts when the free month ends, or now if that month is already over.</p> : null}
+        {!billing?.configured ? <p className="hint">Card payments are not connected on this server yet.</p> : null}
+        {cardNote ? <p className="toast">{cardNote}</p> : null}
+        <button className="primary" type="button" disabled={cardPending || !billing?.configured} onClick={() => openCard(cardOnFile ? "/api/billing/portal" : "/api/billing/checkout")}>
+          {cardPending ? "Opening…" : cardLabel}
+        </button>
+      </div>
       <form onSubmit={onSubmit}>
         <h3>Owner notify if quiet</h3>
         <label className="field">

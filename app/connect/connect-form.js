@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { PRESETS } from "@/lib/presets";
+import BillingBanner from "../billing-banner";
 
 const presetOrder = ["generic", "hostinger", "doteasy", "gmail", "outlook"];
 
-export default function ConnectForm({ shop, googleEnabled, googleRedirectUri, notice, saved }) {
+export default function ConnectForm({ shop, googleEnabled, googleRedirectUri, notice, saved, billingMessage }) {
   const connected = shop.emailConnect;
   const [openImap, setOpenImap] = useState(Boolean(connected?.type === "imap"));
   const [advanced, setAdvanced] = useState(false);
@@ -78,6 +79,7 @@ export default function ConnectForm({ shop, googleEnabled, googleRedirectUri, no
 
   return (
     <main className="screen">
+      <BillingBanner message={billingMessage} />
       <p className="brand">Traack</p>
       <h2>Connect channels</h2>
       <p className="lead">The business email clients already write to, plus a number for texts and calls.</p>

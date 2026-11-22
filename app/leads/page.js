@@ -3,6 +3,7 @@ import { currentShop } from "@/lib/session";
 import { relativeWhen } from "@/lib/time";
 import LeadsList from "./leads-list";
 import LiveRefresh from "../live-refresh";
+import { billingSummary } from "@/lib/billing";
 
 export const dynamic = "force-dynamic";
 
@@ -34,6 +35,7 @@ export default async function LeadsPage({ searchParams }) {
     <LiveRefresh />
     <LeadsList
       notice={notice}
+      billingMessage={billingSummary(ctx.shop).message}
       leads={leads.map((lead) => ({
         id: lead._id.toString(),
         number: lead.number,

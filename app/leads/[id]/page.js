@@ -4,6 +4,7 @@ import { currentShop } from "@/lib/session";
 import { formatWhen } from "@/lib/time";
 import DetailClient from "./detail-client";
 import LiveRefresh from "../../live-refresh";
+import { billingSummary } from "@/lib/billing";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +39,7 @@ export default async function LeadPage({ params }) {
     <>
     <LiveRefresh />
     <DetailClient
+      billingMessage={billingSummary(ctx.shop).message}
       lead={{
         id: lead._id.toString(),
         number: lead.number,

@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { googleConfigured, googleRedirectUri } from "@/lib/gmail";
 import { currentShop } from "@/lib/session";
 import ConnectForm from "./connect-form";
+import { billingSummary } from "@/lib/billing";
 
 export const dynamic = "force-dynamic";
 
@@ -57,6 +58,7 @@ export default async function ConnectPage({ searchParams }) {
       googleRedirectUri={googleRedirectUri("http://localhost:3000")}
       notice={notice}
       saved={saved}
+      billingMessage={billingSummary(ctx.shop).message}
     />
   );
 }
