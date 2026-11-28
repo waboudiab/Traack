@@ -1,7 +1,7 @@
 import { json } from "@/lib/http";
 import { normalizePhone } from "@/lib/phone";
 import { DEFAULT_EMAIL_TEMPLATE, DEFAULT_SMS_TEMPLATE } from "@/lib/presets";
-import { keywordList } from "@/lib/rules";
+import { keywordList, shopLeadKeywords } from "@/lib/rules";
 import { currentShop } from "@/lib/session";
 import { nudgeMinutes } from "@/lib/time";
 
@@ -34,7 +34,8 @@ export async function POST(req) {
     autoAckNewQuotesOnly: Boolean(body.autoAckNewQuotesOnly),
     quietHours: Boolean(body.quietHours),
     ownerMobile,
-    leadKeywords: keywordList(body.leadKeywords),
+    leadKeywords: shopLeadKeywords(body.leadKeywords),
+    leadKeywordsSet: true,
     skipKeywords: keywordList(body.skipKeywords),
   };
   const update = { settings };

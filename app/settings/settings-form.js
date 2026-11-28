@@ -3,7 +3,6 @@
 import { signOut } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { BUILTIN_LEAD_WORDS } from "@/lib/rules";
 import NotifyButton from "../notify-button";
 import BillingBanner from "../billing-banner";
 
@@ -125,14 +124,14 @@ export default function SettingsForm({ settings, notifyKey, billing }) {
 
         <h3>Lead words</h3>
         <label className="field">
-          Extra words from your customers
+          Words that start a lead for this business
           <textarea
             value={form.leadKeywords || ""}
             onChange={(event) => set("leadKeywords", event.target.value)}
-            placeholder={"bumper\ndent\nleak"}
+            placeholder={"estimate\nquote\ndent"}
           />
         </label>
-        <p className="hint">Already counted: {BUILTIN_LEAD_WORDS.join(", ")}. Add words this business’s customers use, one per line or separated by commas.</p>
+        <p className="hint">Saved on this business only. One word or phrase per line, or separated by commas. A message that contains one of these is treated as a new quote. Leave the box empty to restore the starter list.</p>
         <label className="field">
           Skip words
           <textarea

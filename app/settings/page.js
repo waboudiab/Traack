@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
-import { defaultSettings } from "@/lib/presets";
+import { defaultSettings, ensureLeadKeywords } from "@/lib/presets";
+import { shopLeadKeywords } from "@/lib/rules";
 import { currentShop } from "@/lib/session";
 import { vapidPublicKey } from "@/lib/push";
 import { nudgeMinutes } from "@/lib/time";
@@ -34,11 +35,12 @@ export default async function SettingsPage({ searchParams }) {
     }
   }
   if (query.billing === "cancel") note = "The card was not added.";
+  await ensureLeadKeywords(ctx.db, shop);
   const billing = { ...billingSummary(shop), note };
   const settings = { ...defaultSettings(), ...(shop.settings || {}) };
   settings.ownerMobile = shop.phone?.ownerMobile || settings.ownerMobile || "";
   settings.nudgeHours = nudgeMinutes(settings.nudgeHours);
-  settings.leadKeywords = Array.isArray(settings.leadKeywords) ? settings.leadKeywords.join("\n") : "";
+  settings.leadKeywords = shopLeadKeywords(settings.leadKeywords).join("\n");
   settings.skipKeywords = Array.isArray(settings.skipKeywords) ? settings.skipKeywords.join("\n") : "";
   return <SettingsForm settings={settings} notifyKey={vapidPublicKey()} billing={billing} />;
 }
