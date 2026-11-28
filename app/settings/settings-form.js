@@ -131,7 +131,7 @@ export default function SettingsForm({ settings, notifyKey, billing }) {
             placeholder={"estimate\nquote\ndent"}
           />
         </label>
-        <p className="hint">Saved on this business only. One word or phrase per line, or separated by commas. A message that contains one of these is treated as a new quote. Leave the box empty to restore the starter list.</p>
+        <p className="hint">Saved on this business only. One word or phrase per line, or separated by commas. An email is saved as a lead only when it contains one of these words. Leave the box empty to restore the starter list.</p>
         <label className="field">
           Skip words
           <textarea
