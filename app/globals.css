@@ -329,25 +329,51 @@ a.secondary {
   box-shadow: inset 0 0 0 1px var(--accent);
 }
 
-.msg {
-  border-top: 1px solid var(--line);
-  padding-top: 10px;
-  margin-top: 10px;
-  font-size: 13px;
-  line-height: 1.4;
+.thread {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 14px;
 }
 
-.msg.out { color: var(--muted); }
+.msg {
+  max-width: 92%;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  line-height: 1.45;
+}
 
-.msg.latest {
-  border-left: 3px solid var(--accent);
-  padding-left: 10px;
-  background: color-mix(in srgb, var(--accent) 8%, white);
-  border-radius: 0 8px 8px 0;
+.msg.in {
+  align-self: flex-start;
+  background: color-mix(in srgb, var(--accent) 10%, white);
+  border-color: color-mix(in srgb, var(--accent) 24%, white);
+}
+
+.msg.out {
+  align-self: flex-end;
+  background: color-mix(in srgb, var(--ok) 12%, white);
+  border-color: color-mix(in srgb, var(--ok) 32%, white);
   color: var(--ink);
 }
 
-.msg .when { font-size: 11px; color: var(--muted); margin-bottom: 4px; }
+.msg.latest {
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+.msg .who {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+.msg.in .who { color: var(--accent-deep); }
+.msg.out .who { color: var(--ok); }
+.msg .when { font-size: 11px; color: var(--muted); margin-bottom: 6px; }
+.msg .body { white-space: pre-wrap; }
 
 .toast {
   margin-top: 12px;

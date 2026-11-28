@@ -1,0 +1,14 @@
+---
+description: Update Vercel directly when this chat already has access
+alwaysApply: true
+---
+
+# Vercel access
+
+When the Vercel connection is authorized for this project, change Vercel yourself. Do not tell the user to open the Vercel dashboard and paste or save a value there.
+
+This includes environment variables, domains, and deployments. Write the value with the Vercel tools, then redeploy when the running site must pick it up.
+
+If a value is missing, ask for that value only. Then save it on Vercel yourself. Do not send the user to Vercel to finish the step.
+
+Ask the user to use the Vercel dashboard only when the connection is missing, the team is not authorized, or a write was rejected and cannot be retried.

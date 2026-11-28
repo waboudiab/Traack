@@ -138,12 +138,22 @@ export default function DetailClient({ lead, billingMessage }) {
           <li>{lead.reminderSent ? `Owner reminder sent${lead.reminderWhen ? ` · ${lead.reminderWhen}` : ""}` : "Owner reminder not sent yet"}</li>
           <li>{lead.reviewSent ? `Google review request sent${lead.reviewWhen ? ` · ${lead.reviewWhen}` : ""}` : "Google review request not sent yet"}</li>
         </ul>
-        {lead.messages.map((message) => (
-          <div key={message.id} id={message.latest ? "latest-msg" : undefined} className={message.latest ? "msg latest" : message.direction === "out" ? "msg out" : "msg"}>
-            <div className="when">{message.when} · {message.latest ? "latest from customer" : message.label}</div>
-            {message.body}
-          </div>
-        ))}
+        <div className="thread">
+          {lead.messages.map((message) => {
+            const incoming = message.direction !== "out";
+            return (
+              <div
+                key={message.id}
+                id={message.latest ? "latest-msg" : undefined}
+                className={`msg ${incoming ? "in" : "out"}${message.latest ? " latest" : ""}`}
+              >
+                <div className="who">{incoming ? (message.latest ? "Latest from customer" : "From customer") : "Sent"}</div>
+                <div className="when">{message.when}</div>
+                <div className="body">{message.body}</div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       <h3>Status</h3>
